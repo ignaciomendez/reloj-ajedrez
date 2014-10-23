@@ -1,0 +1,96 @@
+<html>
+<head>
+	<title>Reloj</title>
+	<style type="text/css">
+		* {
+			font-family: 'Museo';
+		}
+		.contenedor {
+			background-color: #e7e7e7;
+		}
+
+		.cuadro-reloj {
+			background-color: #e7e7ff;
+			border: 1px dashed black;
+			margin: 20px;
+		}
+
+		p {
+			color:#22f;
+			font-size: 200%;
+		}
+
+		.boton {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		.listo {
+			background-color: blue;
+			border-color: #22f;
+			color:white;
+		}
+	</style>
+	<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+</head>
+<body>
+	<div class="conf">
+		<form action="" method="">
+			<input type="text" placeholder="Tiempo" id="txtTiempo">
+			<input type="button" class="boton" value="Cambiar" id="btnTiempo">
+		</form>
+	</div>
+	<div class="contenedor">
+		<h1>Relojes</h1>
+		<div class="cuadro-reloj">
+			<h2>Jugador 1</h2>
+			<p id="jug1"></p>
+		</div>
+		<div class="cuadro-reloj">
+			<h2>Jugador 2</h2>
+			<p id="jug2"></p>
+		</div>
+		<button class="boton" id="btnConf">Configurar</button>
+		<br>
+		<button class="boton listo" id="btnListo">LISTO</button>
+	</div>
+
+	<script type="text/javascript">
+		$(".conf").hide();
+		var jug1=0, jug2=0;
+		
+		function actualizarContador() {
+			$("#jug1").html(jug1);
+			$("#jug2").html(jug2);	
+		}
+		var jugador=1;
+
+		var intervalo;
+
+		$('#btnListo').click(function() {
+			$('body').keyup(function(e) {
+				if(e.keyCode == 32) {
+					clearInterval(intervalo);
+					if(jugador==1) {
+						intervalo = setInterval(function() {jug1-=1; actualizarContador();},1000);
+						jugador=2;
+					} else if(jugador==2) {
+						intervalo = setInterval(function() {jug2-=1; actualizarContador();},1000);
+						jugador=1;
+					}
+				}
+			});
+		});
+		$("#btnTiempo").click(function() {
+			var tiempo = $("#txtTiempo").val();
+			jug1=tiempo;
+			jug2=tiempo;
+			actualizarContador();
+			$(".conf").toggle();
+		});
+
+		$("#btnConf").click(function() {
+			$(".conf").toggle();
+		});
+	</script>
+</body>
+</html>
